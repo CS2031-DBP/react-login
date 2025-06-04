@@ -1,54 +1,95 @@
-# React + TypeScript + Vite
+# React + TypeScript + Vite - Repaso React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es una aplicación React con TypeScript que utiliza Vite como herramienta de construcción. La aplicación incluye un sistema de autenticación con tokens y formularios para gestión de estudiantes.
 
-Currently, two official plugins are available:
+## Requisitos Previos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Antes de ejecutar este proyecto, necesitas tener instalado:
 
-## Expanding the ESLint configuration
+- **Node.js** (versión 16 o superior)
+- **npm** o **yarn**
+- **Java 17** o superior (para el backend)
+- **Maven** (para el backend)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Backend Requerido
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+**⚠️ IMPORTANTE:** Este proyecto frontend requiere que el backend de Spring Boot esté ejecutándose localmente.
+
+### Configuración del Backend
+
+1. Clona el repositorio del backend:
+   ```bash
+   git clone https://github.com/CS2031-DBP/week7-lab-backend.git
+   cd week7-lab-backend
+   git checkout with_security
+   ```
+
+2. Ejecuta el backend de Spring Boot:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+   
+   O si estás en Windows:
+   ```bash
+   mvnw.cmd spring-boot:run
+   ```
+
+3. El backend estará disponible en: `http://localhost:8080`
+
+**Nota:** El frontend está configurado para conectarse al backend en `http://localhost:8080`. Asegúrate de que el backend esté ejecutándose antes de usar la aplicación frontend.
+
+## Instalación y Ejecución del Frontend
+
+### 1. Instalar dependencias
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Ejecutar en modo desarrollo
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm run dev
 ```
+
+La aplicación estará disponible en `http://localhost:5173`
+
+## Funcionalidades
+
+- **Autenticación:** Sistema de login con tokens JWT
+- **Gestión de contexto:** Manejo de estado global usando React Context
+- **Formularios:** Creación de estudiantes con validación
+- **Persistencia:** Los tokens se guardan en localStorage
+
+## Estructura del Proyecto
+
+```
+src/
+├── components/          # Componentes React
+│   └── StudentForm.tsx  # Formulario para crear estudiantes
+├── contexts/            # Contextos de React
+│   └── TokenContext.tsx # Contexto para manejo de tokens
+├── hooks/              # Custom hooks
+├── assets/             # Recursos estáticos
+├── App.tsx             # Componente principal
+└── main.tsx            # Punto de entrada
+```
+
+## Tecnologías Utilizadas
+
+- **React 18** - Biblioteca de interfaz de usuario
+- **TypeScript** - Superset tipado de JavaScript
+- **Vite** - Herramienta de construcción rápida
+- **Axios** - Cliente HTTP para API calls
+- **Tailwind CSS** - Framework de CSS utilitario
+
+## Solución de Problemas
+
+### Error de conexión con el backend
+- Verifica que el backend esté ejecutándose en `http://localhost:8080`
+- Revisa que no haya conflictos de puertos
+- Asegúrate de estar en la rama `with_security` del backend
+
+### Problemas con tokens
+- Los tokens se almacenan en localStorage del navegador
+- Si tienes problemas de autenticación, limpia el localStorage o usa las herramientas de desarrollador
