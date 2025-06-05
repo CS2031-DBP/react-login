@@ -1,10 +1,17 @@
 import axios from "axios";
 import useToken from "../contexts/TokenContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 const BACKEND_URL = "http://localhost:8080";
 
 function StudentForm() {
   const { token } = useToken();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) navigate("/");
+  }, []);
 
   const alumno = {
     firstname: "John",
