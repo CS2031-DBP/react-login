@@ -34,8 +34,10 @@ function StudentForm() {
 
     if (result.success) {
       console.log(result.student);
+      alert("Alumno creado correctamente");
     } else {
       console.log(result.error);
+      alert(result.error);
     }
   };
 
