@@ -1,10 +1,7 @@
-import axios from "axios";
-import useToken from "../contexts/TokenContext";
-
-const BACKEND_URL = "http://localhost:8080";
+import { useCreateStudent } from "../api";
 
 function StudentForm() {
-  const { token } = useToken();
+  const { createStudent } = useCreateStudent();
 
   const alumno = {
     firstname: "John",
@@ -17,13 +14,13 @@ function StudentForm() {
   };
 
   async function handleButton() {
-    const response = await axios.post(`${BACKEND_URL}/student`, alumno, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const result = await createStudent(alumno);
 
-    console.log(response.data);
+    if (result.success) {
+      console.log(result.student);
+    } else {
+      console.log(result.error);
+    }
   }
 
   return (
