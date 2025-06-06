@@ -1,16 +1,8 @@
-import useToken from "../contexts/TokenContext";
-import { useEffect, type FormEvent } from "react";
-import { useNavigate } from "react-router";
+import { type FormEvent } from "react";
 import { useCreateStudent } from "../api";
 
 function StudentForm() {
-  const { token } = useToken();
-  const navigate = useNavigate();
   const { createStudent } = useCreateStudent();
-
-  useEffect(() => {
-    if (!token) navigate("/");
-  }, []);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -26,7 +18,7 @@ function StudentForm() {
       password: formData.get("password") as string,
     };
 
-    const result = await createStudent(alumno, token);
+    const result = await createStudent(alumno);
 
     if (result.success) {
       console.log(result.student);

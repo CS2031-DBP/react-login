@@ -5,6 +5,7 @@ import "./styles/index.css";
 import Login from "./pages/Login.tsx";
 import { TokenProvider } from "./contexts/TokenContext.tsx";
 import StudentForm from "./pages/StudentForm.tsx";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -12,7 +13,14 @@ createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/student_form" element={<StudentForm />} />
+          <Route
+            path="/student_form"
+            element={
+              <ProtectedRoute>
+                <StudentForm />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </TokenProvider>

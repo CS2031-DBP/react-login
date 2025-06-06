@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useToken } from "./contexts/TokenContext";
 
 const BACKEND_URL = "http://localhost:8080";
 
@@ -26,14 +27,16 @@ type Student = {
 };
 
 export function useCreateStudent() {
-  const createStudent = async (student: Student, token: string | null) => {
+  const { token } = useToken();
+
+  const createStudent = async (student: Student) => {
     try {
       const response = await axios.post(`${BACKEND_URL}/student`, student, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      return { sucess: true, student: response.data };
+      return { success: true, student: response.data };
     } catch {
       return { success: false, error: "Error al crear el estudiante" };
     }
