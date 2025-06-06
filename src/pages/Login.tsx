@@ -1,14 +1,13 @@
 import { type FormEvent } from "react";
-import "../App.css";
-import axios from "axios";
+import "../styles/App.css";
 import useToken from "../contexts/TokenContext";
 import { useNavigate } from "react-router";
-
-const BACKEND_URL = "http://localhost:8080";
+import { useLogin } from "../api";
 
 function Login() {
   const { saveToken } = useToken();
   const navigate = useNavigate();
+  const { login } = useLogin();
 
   async function handleLogin(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -17,16 +16,13 @@ function Login() {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    try {
-      const response = await axios.post(`${BACKEND_URL}/auth/login`, {
-        email: email,
-        password: password,
-      });
+    const result = await login({ email, password });
 
-      saveToken(response.data.token);
+    if (result.success) {
+      saveToken(result.token);
       navigate("/student_form");
-    } catch {
-      alert("Usuario o contraseña incorrecta");
+    } else {
+      alert(result.error);
     }
   }
 

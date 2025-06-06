@@ -1,0 +1,43 @@
+import axios from "axios";
+
+const BACKEND_URL = "http://localhost:8080";
+
+export function useLogin() {
+  const login = async (user: { email: string; password: string }) => {
+    try {
+      const response = await axios.post(`${BACKEND_URL}/auth/login`, user);
+      return { success: true, token: response.data.token };
+    } catch {
+      return { success: false, error: "Usuario o contraseña incorrecta" };
+    }
+  };
+
+  return { login };
+}
+
+type Student = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  age: number;
+  description: string;
+  password: string;
+};
+
+export function useCreateStudent() {
+  const createStudent = async (student: Student, token: string | null) => {
+    try {
+      const response = await axios.post(`${BACKEND_URL}/student`, student, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return { sucess: true, student: response.data };
+    } catch {
+      return { success: false, error: "Error al crear el estudiante" };
+    }
+  };
+
+  return { createStudent };
+}
