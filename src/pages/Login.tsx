@@ -1,15 +1,14 @@
 import { useState } from "react";
-import "./App.css";
+import "../styles/App.css";
 import axios from "axios";
-import StudentForm from "./components/StudentForm";
-import useToken from "./contexts/TokenContext";
+import useToken from "../contexts/TokenContext";
 
 const BACKEND_URL = "http://localhost:8080";
 
-function App() {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { saveToken, token } = useToken();
+  const { saveToken } = useToken();
 
   async function handleLogin() {
     const response = await axios.post(`${BACKEND_URL}/auth/login`, {
@@ -44,10 +43,9 @@ function App() {
         >
           Log in
         </button>
-        {token && <StudentForm />}
       </div>
     </div>
   );
 }
 
-export default App;
+export default Login;
